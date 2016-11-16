@@ -1,0 +1,41 @@
+.container-fluid {
+    padding: 0;
+}
+
+.nav li {
+    margin: 0.5rem 0;
+}
+
+.nav .nav-header {
+    padding: 0 1rem;
+    color: rgba(224,224,224,0.3);
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.nav li a {
+    text-decoration: none;
+    color: #F5F5F5;
+    position: relative;
+    display: block;
+    padding: 0.5rem 1rem;
+    border-radius: 3px;
+}
+
+.nav li a:not(.active):hover {
+    box-shadow: 0 0 1px #4CAF50;
+}
+
+.nav li>a.active {
+    background-color: #4CAF50;
+}
+
+.nav .btn-group-vertical {
+    text-align: center;
+    display: block;
+}
+
+.nav .btn-group-vertical .btn {
+    width: 80%;
+    display: inline-block;
+}
