@@ -10,13 +10,17 @@ import { AppComponent } from './app.component';
 import { MenuComponent } from './menu/menu.component';
 import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
+import { RegisterComponent } from './register/register.component';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
     declarations: [
         AppComponent,
         MenuComponent,
         PlayersComponent,
-        TeamsComponent
+        TeamsComponent,
+        RegisterComponent,
+        LoginComponent
     ],
     imports: [
         BrowserModule,
