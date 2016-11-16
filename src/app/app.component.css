@@ -1,0 +1,26 @@
+@media (max-width: 768px) {
+    .container {
+        width: 100%;
+    }
+    nav-menu {
+        float: none !important;
+        width: 100%;
+    }
+    .inner-container {
+        width: 100% !important;
+        float: none !important;
+        padding: 0 15px !important;
+    }
+}
+
+nav-menu {
+    width: 20%;
+    float: left;
+    font-size: 0.9em;
+}
+
+.inner-container {
+    width: 80%;
+    float: left;
+    padding: 0 3em;
+}

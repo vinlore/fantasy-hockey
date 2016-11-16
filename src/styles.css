@@ -1,5 +1,12 @@
 /* You can add global styles to this file, and also import other style files */
+@media (max-width: 768px) {
+    body {
+        padding-top: 0 !important;
+    }
+}
+
 body {
+    padding-top: 3em;
     background-color: #1A1A1A;
     min-width: 100%;
     font-family: 'Noto Sans', sans-serif;
