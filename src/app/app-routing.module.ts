@@ -8,8 +8,8 @@ import { TeamsComponent } from './teams/teams.component';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo:'/players'},
-    { path: '/login', component: LoginComponent },
-    { path: '/register', component: RegisterComponent },
+    { path: 'login', component: LoginComponent },
+    { path: 'register', component: RegisterComponent },
     { path: 'players', component: PlayersComponent },
     { path: 'teams', component: TeamsComponent }
 ];
