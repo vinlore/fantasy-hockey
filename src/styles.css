@@ -13,6 +13,17 @@ body {
     color: #F5F5F5;
 }
 
+.alert {
+    padding: 0.5em;
+    font-size: 0.9rem;
+    text-align: center;
+}
+
+.btn:focus,
+.btn:active {
+    outline: none !important;
+}
+
 .btn-outline-primary {
     border-color: #2196F3;
 }
@@ -48,4 +59,8 @@ body {
 .form-group .form-control:focus {
     outline: none;
     box-shadow: inset 0 -2px 0 #2196F3;
+}
+
+.form-error .form-control {
+    box-shadow: inset 0 -2px 0 #f44336 !important;
 }
