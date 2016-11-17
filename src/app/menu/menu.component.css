@@ -30,12 +30,17 @@
     background-color: #4CAF50;
 }
 
-.nav .btn-group-vertical {
+.nav .btn-container {
     text-align: center;
     display: block;
 }
 
-.nav .btn-group-vertical .btn {
+.nav .btn-container .btn {
     width: 80%;
     display: inline-block;
+}
+
+.nav .btn-link {
+    text-decoration: none;
+    color: rgba(224,224,224,0.3);
 }
