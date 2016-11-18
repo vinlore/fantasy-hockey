@@ -5,6 +5,7 @@ import { HttpModule } from '@angular/http';
 import { RouterModule } from '@angular/router';
 
 // Custom modules
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 
 // Components
@@ -31,7 +32,8 @@ import { AuthService } from './services/auth.service';
         BrowserModule,
         FormsModule,
         HttpModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NgbModule.forRoot(),
     ],
     providers: [
         AuthService
