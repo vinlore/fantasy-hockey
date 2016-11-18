@@ -1,3 +1,30 @@
-<p>
-  register works!
-</p>
+<div class="container">
+    <h2 class="page-header">Register</h2>
+    <div class="row flex-items-xs-middle flex-items-xs-center">
+        <div class="error-messages" *ngIf="(error | json) != '{}'">
+            <ul>
+                <li *ngIf="error.username">{{error.username}}</li>
+                <li *ngFor="let err of error.password">{{err}}</li>
+            </ul>
+        </div>
+    </div>
+    <div class="row flex-items-xs-middle flex-items-xs-center">
+        <div class="col-sm-12 col-md-8 col-lg-5 flex-xs-middle">
+            <form (ngSubmit)="register(f)" #f="ngForm" novalidate>
+                <div class="form-group" [class.form-error]="!username.valid && !username.pristine || error.username">
+                    <label for="username">Username</label>
+                    <input type="text" class="form-control" name="username" [(ngModel)]="user.username" #username="ngModel" required>
+                </div>
+                <div class="form-group" [class.form-error]="!password.valid && !password.pristine || error.password">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password" [(ngModel)]="user.password" #password="ngModel" required>
+                </div>
+                <div class="form-group" [class.form-error]="!password2.valid && !password2.pristine || error.password">
+                    <label for="password2">Password Confirmation</label>
+                    <input type="password" class="form-control" name="password2" [(ngModel)]="user.passwordConf" #password2="ngModel" required>
+                </div>
+                <button type="submit" class="btn btn-success" [disabled]="!f.valid">Register</button>
+            </form>
+        </div>
+    </div>
+</div>

@@ -15,6 +15,33 @@ export class AuthService {
         }
     }
 
+    register(username, password, passwordConf): Promise<any> {
+        let user = {
+            username: username,
+            password: password,
+            password_confirmation: passwordConf
+        }
+        return this.http.post('http://localhost:8000/api/auth/register', user).toPromise()
+            .then(response => {
+                let token = response.json().token;
+                if (token) {
+                    this.token = token;
+                    let storeUser = {
+                        username: username,
+                        token: token
+                    }
+                    localStorage.setItem('currentUser', JSON.stringify(storeUser));
+                    return response.status;
+                } else {
+                    console.log(response.json().error);
+                    return response.json().error;
+                }
+            }).catch(error => {
+                console.log(error.json().error);
+                return Promise.reject(error.json().error);
+            })
+    }
+
     login(username, password): Promise<any> {
         let user = {
             username: username,
