@@ -19,6 +19,9 @@ import { LoginComponent } from './login/login.component';
 // Services
 import { AuthService } from './services/auth.service';
 
+// Pipes
+import { PaginatePipe } from './pipes/paginate.pipe';
+
 @NgModule({
     declarations: [
         AppComponent,
@@ -26,7 +29,8 @@ import { AuthService } from './services/auth.service';
         PlayersComponent,
         TeamsComponent,
         RegisterComponent,
-        LoginComponent
+        LoginComponent,
+        PaginatePipe,
     ],
     imports: [
         BrowserModule,

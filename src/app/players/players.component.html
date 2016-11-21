@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <h2 class="page-header">Players</h2>
     <div class="table-responsive">
         <table class="table table-inverse table-hover">
@@ -25,27 +25,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr *ngFor="let player of players">
+                <tr *ngFor="let player of (players | paginate:page:pageSize)">
                     <td>{{player.firstName}}</td>
                     <td>{{player.lastName}}</td>
                     <td>{{player.position}}</td>
                     <td>{{player.age}}</td>
                     <td>{{player.team}}</td>
-                    <td>{{player.stats.gamesPlayed}}</td>
-                    <td>{{player.stats.goals}}</td>
-                    <td>{{player.stats.assists}}</td>
+                    <td>{{player.stats.gamesPlayed || 0}}</td>
+                    <td>{{player.stats.goals || 0}}</td>
+                    <td>{{player.stats.assists || 0}}</td>
                     <td>{{player.stats.goals + player.stats.assists || 0}}</td>
-                    <td>{{player.stats.pointsPerGame}}</td>
-                    <td>{{player.stats.plusMinus}}</td>
-                    <td>{{player.stats.ppGoals}}</td>
-                    <td>{{player.stats.ppAsists}}</td>
-                    <td>{{player.stats.penaltyMins}}</td>
-                    <td>{{player.stats.shots}}</td>
-                    <td>{{player.stats.shotsPerGame}}</td>
-                    <td>{{player.stats.hits}}</td>
-                    <td>{{player.stats.blocks}}</td>
+                    <td>{{player.stats.pointsPerGame || 0}}</td>
+                    <td>{{player.stats.plusMinus || 0}}</td>
+                    <td>{{player.stats.ppGoals || 0}}</td>
+                    <td>{{player.stats.ppAsists || 0}}</td>
+                    <td>{{player.stats.penaltyMins || 0}}</td>
+                    <td>{{player.stats.shots || 0}}</td>
+                    <td>{{player.stats.shotsPerGame || 0}}</td>
+                    <td>{{player.stats.hits || 0}}</td>
+                    <td>{{player.stats.blocks || 0}}</td>
                 </tr>
             </tbody>
         </table>
     </div>
+    <ngb-pagination [collectionSize]="playersSize" [(page)]="page" [boundaryLinks]="true" [size]="sm" [directionLinks]="true" [(pageSize)]="pageSize" [maxSize]="3" [ellipses]="true"></ngb-pagination>
 </div>

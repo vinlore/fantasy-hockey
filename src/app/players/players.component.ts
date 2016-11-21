@@ -13,7 +13,10 @@ import { Player } from '../models/player';
 })
 export class PlayersComponent implements OnInit {
 
-    players: Player[];
+    playersSize: number = 0;
+    pageSize: number = 30;
+    page: number = 1;
+    players: Player[] = [];
     errorMsg: string;
 
     constructor(private playersService: PlayersService) { }
@@ -25,7 +28,7 @@ export class PlayersComponent implements OnInit {
     getPlayers() {
         this.playersService.getPlayers()
             .subscribe(
-                players => this.players = players,
+                players => { this.players = players; this.playersSize = this.players.length },
                 error => this.errorMsg = error
             );
     }
