@@ -36,7 +36,7 @@
                     <td>{{player.stats.assists || 0}}</td>
                     <td>{{player.stats.goals + player.stats.assists || 0}}</td>
                     <td>{{player.stats.pointsPerGame || 0}}</td>
-                    <td>{{player.stats.plusMinus || 0}}</td>
+                    <td><span [hidden]="!(player.stats.plusMinus > 0)">+</span>{{player.stats.plusMinus || 0}}</td>
                     <td>{{player.stats.ppGoals || 0}}</td>
                     <td>{{player.stats.ppAsists || 0}}</td>
                     <td>{{player.stats.penaltyMins || 0}}</td>
