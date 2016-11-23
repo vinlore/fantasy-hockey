@@ -38,11 +38,11 @@ export class Player {
         this.draftYear = player.draftYear;
         this.draftNo = player.draftNo;
         this.draftRound = player.draftRound;
-        if (player.stats_year[0]) {
+        if (player.stats) {
             if (player.position === 'G') {
-                this.stats = new GoalieStats(player.stats_year[0]);
+                this.stats = new GoalieStats(player.stats);
             } else {
-                this.stats = new SkaterStats(player.stats_year[0]);
+                this.stats = new SkaterStats(player.stats);
             }
         } else {
             this.stats = {} as Stats;
