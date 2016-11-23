@@ -1,0 +1,69 @@
+.team-card {
+    background-color: #212121;
+    height: 4rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.team-card:not(:last-of-type) {
+    margin-bottom: 0.5rem;
+}
+
+.team-card img {
+    height: 100%;
+}
+
+.nav-pills {
+    display: flex;
+    justify-content: center;
+    margin-top: -2rem;
+    margin-bottom: 1rem;
+}
+
+.nav-pills .nav-item:hover {
+    background-color: rgba(66,66,66,0.4);
+    border-radius: 0.25rem;
+}
+
+.nav-pills .nav-item a {
+    cursor: pointer;
+}
+
+.team-badge {
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    font-weight: 600;
+    width: 8%;
+    background-color: #e0e0e0;
+    color: #212121;
+}
+
+.team-card .card-text {
+    padding: 0.5rem;
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+
+.team-card .point-badge:before {
+    content: 'PTS';
+    position: absolute;
+    font-size: 0.8rem;
+    bottom: 10%;
+    color: rgba(0,0,0,0.3);
+}
+
+.team-record {
+    display: flex;
+    align-items: center;
+    float: right;
+    height: 100%;
+}
+
+.division {
+    margin-bottom: 0.5em;
+}

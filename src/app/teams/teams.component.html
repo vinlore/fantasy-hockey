@@ -1,3 +1,92 @@
-<p>
-  teams works!
-</p>
+<div class="container-fluid">
+    <h2 class="page-header">Teams</h2>
+    <ul class="nav nav-pills">
+        <li class="nav-item">
+            <a class="nav-link" (click)="category='league'" [class.active]="category==='league'">League</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="category='conference'" [class.active]="category==='conference'">Conference</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" (click)="category='division'" [class.active]="category==='division'">Division</a>
+        </li>
+    </ul>
+    <div class="row flex-items-lg-center" [ngSwitch]="category">
+        <ng-container *ngSwitchCase="'league'">
+            <div class="col-lg-10 col-md-12 league">
+                <div class="team-card" *ngFor="let team of teams">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'conference'">
+            <div class="col-md-6 conference">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'western')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+            <div class="col-md-6 conference">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'eastern')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+        </ng-container>
+        <ng-container *ngSwitchCase="'division'">
+            <div class="col-md-6 division">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'atlantic')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+            <div class="col-md-6 division">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'central')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+            <div class="col-md-6 division">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'metropolitan')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+            <div class="col-md-6 division">
+                <div class="team-card" *ngFor="let team of (teams | teamFilter:category:'pacific')">
+                    <div class="team-badge">{{team.leagueRank}}</div>
+                    <div class="card-text">
+                        <img [src]="team.imgUrl" alt="">{{team.name}}
+                        <div class="team-record">{{team.wins}}-{{team.losses}}-{{team.otLosses}} {{team.streak}}</div>
+                    </div>
+                    <div class="team-badge point-badge">{{team.points}}</div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+</div>
