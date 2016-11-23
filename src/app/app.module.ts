@@ -22,6 +22,7 @@ import { AuthService } from './services/auth.service';
 // Pipes
 import { PaginatePipe } from './pipes/paginate.pipe';
 import { TeamFilterPipe } from './pipes/team-filter.pipe';
+import { TeamDetailComponent } from './team-detail/team-detail.component';
 
 @NgModule({
     declarations: [
@@ -33,6 +34,7 @@ import { TeamFilterPipe } from './pipes/team-filter.pipe';
         LoginComponent,
         PaginatePipe,
         TeamFilterPipe,
+        TeamDetailComponent,
     ],
     imports: [
         BrowserModule,

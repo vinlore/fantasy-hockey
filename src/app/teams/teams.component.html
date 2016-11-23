@@ -14,7 +14,7 @@
     <div class="row flex-items-lg-center" [ngSwitch]="category">
         <ng-container *ngSwitchCase="'league'">
             <div class="col-lg-10 col-md-12 league">
-                <div class="team-card" *ngFor="let team of teams">
+                <div class="team-card" *ngFor="let team of teams" (click)="gotoTeam(team.id)">
                     <div class="team-badge">{{team.leagueRank}}</div>
                     <div class="card-text">
                         <img [src]="team.imgUrl" alt="">{{team.name}}

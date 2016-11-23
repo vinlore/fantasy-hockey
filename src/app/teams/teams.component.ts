@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 import { TeamService } from '../services/team.service';
@@ -18,7 +19,7 @@ export class TeamsComponent implements OnInit {
 
     errorMsg: string;
 
-    constructor(private teamService: TeamService) { }
+    constructor(private teamService: TeamService, private router: Router) { }
 
     ngOnInit() {
         this.getTeams();
@@ -30,6 +31,10 @@ export class TeamsComponent implements OnInit {
             teams => this.teams = teams,
             error => this.errorMsg = error
             )
+    }
+
+    gotoTeam(id): void {
+        this.router.navigate(['/teams', id]);
     }
 
 }
