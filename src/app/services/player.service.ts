@@ -7,7 +7,7 @@ import { Player } from '../models/player';
 import 'rxjs/add/operator/map';
 
 @Injectable()
-export class PlayersService {
+export class PlayerService {
 
     players: Player[] = [];
 

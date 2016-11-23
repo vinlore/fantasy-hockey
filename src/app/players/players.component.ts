@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { PlayersService } from '../services/players.service';
+import { PlayerService } from '../services/player.service';
 
 import { Player } from '../models/player';
 
@@ -9,7 +9,7 @@ import { Player } from '../models/player';
     selector: 'players',
     templateUrl: './players.component.html',
     styleUrls: ['./players.component.css'],
-    providers: [PlayersService],
+    providers: [PlayerService],
 })
 export class PlayersComponent implements OnInit {
 
@@ -19,14 +19,14 @@ export class PlayersComponent implements OnInit {
     players: Player[] = [];
     errorMsg: string;
 
-    constructor(private playersService: PlayersService) { }
+    constructor(private playerService: PlayerService) { }
 
     ngOnInit() {
         this.getPlayers();
     }
 
     getPlayers() {
-        this.playersService.getPlayers()
+        this.playerService.getPlayers()
             .subscribe(
                 players => { this.players = players; this.playersSize = this.players.length },
                 error => this.errorMsg = error
