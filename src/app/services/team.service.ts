@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { Team } from '../models/team';
 
 @Injectable()
-export class TeamsService {
+export class TeamService {
 
     teams: Team[] = [];
 

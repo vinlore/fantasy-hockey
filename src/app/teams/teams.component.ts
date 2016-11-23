@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { TeamsService } from '../services/teams.service';
+import { TeamService } from '../services/team.service';
 
 import { Team } from '../models/team';
 
@@ -9,7 +9,7 @@ import { Team } from '../models/team';
     selector: 'app-teams',
     templateUrl: './teams.component.html',
     styleUrls: ['./teams.component.css'],
-    providers: [TeamsService],
+    providers: [TeamService],
 })
 export class TeamsComponent implements OnInit {
 
@@ -18,14 +18,14 @@ export class TeamsComponent implements OnInit {
 
     errorMsg: string;
 
-    constructor(private teamsService: TeamsService) { }
+    constructor(private teamService: TeamService) { }
 
     ngOnInit() {
         this.getTeams();
     }
 
     getTeams() {
-        return this.teamsService.getTeams()
+        return this.teamService.getTeams()
             .subscribe(
             teams => this.teams = teams,
             error => this.errorMsg = error
