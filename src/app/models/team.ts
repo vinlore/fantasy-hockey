@@ -1,3 +1,5 @@
+import { Player } from './player';
+
 export class Team {
     id: number;
     abbr: string;
@@ -24,6 +26,7 @@ export class Team {
     eastRecord: string;
     westRecord: string;
     imgUrl: string;
+    players: Player[];
 
     constructor(private team) {
         this.id = team.id;
@@ -51,5 +54,11 @@ export class Team {
         this.eastRecord = team.east_record;
         this.westRecord = team.west_record;
         this.imgUrl = 'https://www-league.nhlstatic.com/builds/site-core/df9488943d10a2f8ee1599b5190c7c84e8b21fb6_1478183431/images/team/logo/current/' + team.id + '_dark.svg';
+        this.players = [];
+        if (team.players) {
+            for (let player of team.players) {
+                this.players.push(new Player(player));
+            }
+        }
     }
 }
