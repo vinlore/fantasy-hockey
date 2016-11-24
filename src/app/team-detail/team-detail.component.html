@@ -1,3 +1,69 @@
-<p>
-  team-detail works!
-</p>
+<div class="container-fluid" *ngIf="team">
+    <h2 class="page-header">{{team.name}}</h2>
+    <article class="team-stats">
+        <img [src]="team.imgUrl" alt="">
+        <div>
+        #{{team.leagueRank}} in league.
+        #{{team.conferenceRank}} in {{team.conference}}.
+        #{{team.divisionRank}} in {{team.division}}.
+        {{team.points}} PTS.
+        {{team.streak}} streak.
+        </div>
+        <div>
+        {{team.wins}}-{{team.losses}}-{{team.otLosses}}
+        {{team.lastTenRecord}} in last 10.
+        {{team.homeRecord}} at home.
+        {{team.awayRecord}} at away.
+        {{team.eastRecord}} vs. eastern conference.
+        {{team.westRecord}} vs. western conference.
+        </div>
+        <div>
+        {{team.goalsFor}} goals scored.
+        {{team.goalsAgainst}} goals against.
+        </div>
+    </article>
+    <article class="players">
+        <div class="table-responsive">
+            <table class="table table-inverse table-hover">
+                <thead>
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Position</th>
+                        <th>Age</th>
+                        <th>GP</th>
+                        <th>G</th>
+                        <th>A</th>
+                        <th>P</th>
+                        <th>+/-</th>
+                        <th>PPG</th>
+                        <th>PPA</th>
+                        <th>PIM</th>
+                        <th>SOG</th>
+                        <th>HITS</th>
+                        <th>BLKS</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let player of team.players">
+                        <td>{{player.firstName}}</td>
+                        <td>{{player.lastName}}</td>
+                        <td>{{player.position}}</td>
+                        <td>{{player.age}}</td>
+                        <td>{{player.stats.gamesPlayed || 0}}</td>
+                        <td>{{player.stats.goals || 0}}</td>
+                        <td>{{player.stats.assists || 0}}</td>
+                        <td>{{player.stats.goals + player.stats.assists || 0}}</td>
+                        <td><span [hidden]="!(player.stats.plusMinus > 0)">+</span>{{player.stats.plusMinus || 0}}</td>
+                        <td>{{player.stats.ppGoals || 0}}</td>
+                        <td>{{player.stats.ppAsists || 0}}</td>
+                        <td>{{player.stats.penaltyMins || 0}}</td>
+                        <td>{{player.stats.shots || 0}}</td>
+                        <td>{{player.stats.hits || 0}}</td>
+                        <td>{{player.stats.blocks || 0}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </article>
+</div>
