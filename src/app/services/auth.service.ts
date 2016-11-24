@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { tokenNotExpired } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -15,6 +16,10 @@ export class AuthService {
         }
     }
 
+    loggedIn() {
+        return tokenNotExpired();
+    }
+
     register(username, password, passwordConf): Promise<any> {
         let user = {
             username: username,
@@ -26,11 +31,8 @@ export class AuthService {
                 let token = response.json().token;
                 if (token) {
                     this.token = token;
-                    let storeUser = {
-                        username: username,
-                        token: token
-                    }
-                    localStorage.setItem('currentUser', JSON.stringify(storeUser));
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('id_token', token);
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -52,11 +54,8 @@ export class AuthService {
                 let token = response.json().token;
                 if (token) {
                     this.token = token;
-                    let storeUser = {
-                        username: username,
-                        token: token
-                    }
-                    localStorage.setItem('currentUser', JSON.stringify(storeUser));
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('id_token', token);
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -70,8 +69,11 @@ export class AuthService {
 
     logout(): void {
         this.token = null;
-        if (localStorage.getItem('currentUser')) {
-            localStorage.removeItem('currentUser');
+        if (localStorage.getItem('id_token')) {
+            localStorage.removeItem('id_token');
+        }
+        if (localStorage.getItem('username')) {
+            localStorage.removeItem('username');
         }
     }
 
