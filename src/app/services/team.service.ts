@@ -24,4 +24,14 @@ export class TeamService {
             })
     }
 
+    getTeamDetail(id): Observable<Team> {
+        return this.http.get('http://localhost:8000/api/teams/' + id)
+            .map(response => {
+                return new Team(response.json());
+            }).catch(error => {
+                console.log(error);
+                return Observable.throw(error);
+            })
+    }
+
 }
