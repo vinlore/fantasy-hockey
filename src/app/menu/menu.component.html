@@ -1,8 +1,9 @@
 <div class="container-fluid">
     <ul class="nav">
         <div class="btn-container">
-            <button class="btn btn-outline-primary" routerLink="/login">Login</button>
-            <button class="btn btn-link btn-sm" routerLink="/register">Register</button>
+            <button class="btn btn-outline-primary" routerLink="/login" *ngIf="!loggedIn">Login</button>
+            <button class="btn btn-link btn-sm" routerLink="/register" *ngIf="!loggedIn">Register</button>
+            <button class="btn btn-danger" (click)="logout()" *ngIf="loggedIn">Logout</button>
         </div>
         <br>
         <li class="nav-header">NHL</li>

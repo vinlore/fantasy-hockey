@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, Response } from '@angular/http';
+import { ReplaySubject } from 'rxjs/ReplaySubject';
 import { tokenNotExpired } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
@@ -7,16 +8,15 @@ import 'rxjs/add/operator/toPromise';
 @Injectable()
 export class AuthService {
 
-    public token: string;
+    isLoggedIn = new ReplaySubject<boolean>();
+    isLoggedIn$ = this.isLoggedIn.asObservable();
 
     constructor(private http: Http) {
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        if (currentUser) {
-            this.token = currentUser.token;
-        }
+        this.loggedIn();
     }
 
     loggedIn() {
+        this.isLoggedIn.next(tokenNotExpired());
         return tokenNotExpired();
     }
 
@@ -30,9 +30,9 @@ export class AuthService {
             .then(response => {
                 let token = response.json().token;
                 if (token) {
-                    this.token = token;
                     localStorage.setItem('username', username);
                     localStorage.setItem('id_token', token);
+                    this.loggedIn();
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -53,9 +53,9 @@ export class AuthService {
             .then(response => {
                 let token = response.json().token;
                 if (token) {
-                    this.token = token;
                     localStorage.setItem('username', username);
                     localStorage.setItem('id_token', token);
+                    this.loggedIn();
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -68,13 +68,13 @@ export class AuthService {
     }
 
     logout(): void {
-        this.token = null;
         if (localStorage.getItem('id_token')) {
             localStorage.removeItem('id_token');
         }
         if (localStorage.getItem('username')) {
             localStorage.removeItem('username');
         }
+        this.loggedIn();
     }
 
 }
