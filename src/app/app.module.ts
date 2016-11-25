@@ -27,7 +27,6 @@ import { RegisterComponent } from './register/register.component';
 import { LoginComponent } from './login/login.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { CustomTeamComponent } from './custom-team/custom-team.component';
-import { CreateTeamComponent } from './custom-team/create-team/create-team.component';
 
 @NgModule({
     declarations: [
@@ -41,7 +40,6 @@ import { CreateTeamComponent } from './custom-team/create-team/create-team.compo
         TeamFilterPipe,
         TeamDetailComponent,
         CustomTeamComponent,
-        CreateTeamComponent,
     ],
     imports: [
         BrowserModule,

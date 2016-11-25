@@ -9,7 +9,6 @@ import { PlayersComponent } from './players/players.component';
 import { TeamsComponent } from './teams/teams.component';
 import { TeamDetailComponent } from './team-detail/team-detail.component';
 import { CustomTeamComponent } from './custom-team/custom-team.component';
-import { CreateTeamComponent } from './custom-team/create-team/create-team.component';
 
 const routes: Routes = [
     { path: '', pathMatch: 'full', redirectTo:'/players' },
@@ -18,8 +17,7 @@ const routes: Routes = [
     { path: 'players', component: PlayersComponent },
     { path: 'teams', component: TeamsComponent },
     { path: 'teams/:id', component: TeamDetailComponent },
-    { path: 'custom-teams/:id', component: CustomTeamComponent, canActivate: [AuthGuard] },
-    { path: 'custom-teams/create', component: CreateTeamComponent, canActivate: [AuthGuard] }
+    { path: 'custom-teams/:id', component: CustomTeamComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
