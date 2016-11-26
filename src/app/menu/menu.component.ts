@@ -51,7 +51,10 @@ export class MenuComponent implements OnInit {
         if (f.valid && this.loggedIn) {
             this.customTeamService.createTeam(this.teamName)
                 .subscribe(
-                team => this.router.navigate(['/custom-teams', team.id]),
+                team => {
+                    this.teams.push(team);
+                    this.router.navigate(['/custom-teams', team.id])
+                },
                 error => this.errorMsg = error
                 )
         }
