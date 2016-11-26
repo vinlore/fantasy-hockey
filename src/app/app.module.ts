@@ -7,6 +7,7 @@ import { RouterModule } from '@angular/router';
 // Custom modules
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
+import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth } from 'angular2-jwt';
 
 // Services
 import { AuthService } from './services/auth.service';
@@ -51,6 +52,15 @@ import { CustomTeamComponent } from './custom-team/custom-team.component';
     providers: [
         AuthService,
         AuthGuard,
+        AuthHttp,
+        provideAuth({
+            headerName: 'Authorization',
+            headerPrefix: 'Bearer',
+            tokenName: 'id_token',
+            tokenGetter: (() => localStorage.getItem('id_token')),
+            globalHeaders: [{ 'Content-Type': 'application/json' }],
+            noJwtError: true
+        }),
     ],
     bootstrap: [AppComponent]
 })
