@@ -1,13 +1,20 @@
 <div class="container-fluid">
+    <div class="btn-container">
+        <button class="btn btn-outline-primary" routerLink="/login" *ngIf="!loggedIn">Login</button>
+        <button class="btn btn-link btn-sm" routerLink="/register" *ngIf="!loggedIn">Register</button>
+        <button class="btn btn-danger" (click)="logout()" *ngIf="loggedIn">Logout</button>
+    </div>
     <ul class="nav">
-        <div class="btn-container">
-            <button class="btn btn-outline-primary" routerLink="/login" *ngIf="!loggedIn">Login</button>
-            <button class="btn btn-link btn-sm" routerLink="/register" *ngIf="!loggedIn">Register</button>
-            <button class="btn btn-danger" (click)="logout()" *ngIf="loggedIn">Logout</button>
-        </div>
         <br>
         <li class="nav-header">NHL</li>
         <li><a routerLink="/teams" routerLinkActive="active">Teams</a></li>
         <li><a routerLink="/players" routerLinkActive="active">Players</a></li>
     </ul>
+    <div id="create-team" *ngIf="loggedIn">
+        <div class="nav-header">New Team</div>
+        <form (ngSubmit)="createTeam(f)" #f="ngForm" novalidate>
+            <input type="text" class="form-control" placeholder="Team Name" name="name" [(ngModel)]="teamName" #name="ngModel" required>
+            <button type="submit" class="btn btn-block" [disabled]="!f.valid">Create <i class="fa fa-check" [hidden]="!f.valid"></i></button>
+        </form>
+    </div>
 </div>
