@@ -2,16 +2,13 @@
     padding: 0;
 }
 
-.nav li {
-    margin: 0.5rem 0;
-}
-
 .nav-header {
-    padding: 0 1rem;
     color: rgba(224,224,224,0.3);
     font-weight: 700;
     text-transform: uppercase;
-    margin-top: 1rem;
+    margin: 1rem 0 0.5rem 0;
+    padding: 0.5rem 1rem;
+    border-bottom: 1px solid rgba(224,224,224,0.2);
 }
 
 .nav li a {
@@ -44,6 +41,11 @@
 .btn-link {
     text-decoration: none;
     color: rgba(224,224,224,0.3);
+}
+
+#no-teams {
+    color: rgba(224,224,224,0.2);
+    padding: 0.5rem 1rem;
 }
 
 #create-team .form-control {

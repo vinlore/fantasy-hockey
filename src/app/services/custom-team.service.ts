@@ -14,10 +14,23 @@ export class CustomTeamService {
     createTeam(team) {
         return this.http.post('http://localhost:8000/api/custom-teams', JSON.stringify({name: team}))
             .map(response => {
-                let token =response.headers.get('Authorization').replace('Bearer ', '');
+                let token = response.headers.get('Authorization').replace('Bearer ', '');
                 if (token)
                     localStorage.setItem('id_token', token);
                 return new CustomTeam(response.json());
+            }).catch(error => {
+                console.log(error);
+                return Observable.throw(error);
+            })
+    }
+
+    getTeams() {
+        return this.http.get('http://localhost:8000/api/custom-teams')
+            .map(response => {
+                let token = response.headers.get('Authorization').replace('Bearer ', '');
+                if (token)
+                    localStorage.setItem('id_token', token);
+                return response.json() as CustomTeam[];
             }).catch(error => {
                 console.log(error);
                 return Observable.throw(error);
