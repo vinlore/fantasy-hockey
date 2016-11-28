@@ -108,6 +108,10 @@ export class AuthService {
                 let exp = new Date(0);
                 let delay = (exp.setUTCSeconds(jwtExp) - iat.setUTCSeconds(jwtIat));
 
+                if (delay > 3600000) {
+                    delay = 3600000;
+                }
+
                 return Observable.interval(delay);
             })
 
@@ -118,21 +122,27 @@ export class AuthService {
 
     // Return an observable with a timer equal to the time until token expiry and subscribing it to call refresh and schedule further refreshing
     startupTokenRefresh() {
-        let source = this.authHttp.tokenStream
-            .flatMap(token => {
-                let now = new Date().valueOf();
-                let jwtExp = this.jwtHelper.decodeToken(token).exp;
-                let exp = new Date(0);
-                exp.setUTCSeconds(jwtExp);
-                let delay = exp.valueOf() - now;
+        if (localStorage.getItem('id_token')) {
+            let source = this.authHttp.tokenStream
+                .flatMap(token => {
+                    let now = new Date().valueOf();
+                    let jwtExp = this.jwtHelper.decodeToken(token).exp;
+                    let exp = new Date(0);
+                    exp.setUTCSeconds(jwtExp);
+                    let delay = exp.valueOf() - now;
 
-                return Observable.timer(delay);
+                    if (!tokenNotExpired()) {
+                        delay = 0;
+                    }
+
+                    return Observable.timer(delay);
+                })
+
+            source.subscribe(() => {
+                this.refresh();
+                this.scheduleRefresh();
             })
-
-        source.subscribe(() => {
-            this.refresh();
-            this.scheduleRefresh();
-        })
+        }
     }
 
     // Unsubscribe from any refreshing after logout
