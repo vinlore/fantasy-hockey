@@ -37,4 +37,14 @@ export class CustomTeamService {
             })
     }
 
+    getTeam(id) {
+        return this.http.get('http://localhost:8000/api/custom-teams/' + id)
+            .map(response => {
+                return new CustomTeam(response.json());
+            }).catch(error => {
+                console.log(error);
+                return Observable.throw(error);
+            })
+    }
+
 }
