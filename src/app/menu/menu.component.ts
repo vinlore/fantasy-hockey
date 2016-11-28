@@ -30,6 +30,7 @@ export class MenuComponent implements OnInit {
     ) { }
 
     ngOnInit() {
+        this.authService.startupTokenRefresh();
         this.subscription = this.authService.isLoggedIn$
             .subscribe(loggedIn => {
                 this.loggedIn = loggedIn;

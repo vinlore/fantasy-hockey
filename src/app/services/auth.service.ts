@@ -1,17 +1,19 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
-import { ReplaySubject } from 'rxjs/ReplaySubject';
-import { tokenNotExpired } from 'angular2-jwt';
+import { Http, Headers, Response, RequestOptions } from '@angular/http';
+import { ReplaySubject, Observable, Subscription } from 'rxjs';
+
+import { tokenNotExpired, AuthHttp, JwtHelper } from 'angular2-jwt';
 
 import 'rxjs/add/operator/toPromise';
 
 @Injectable()
 export class AuthService {
 
+    refreshSubscription: any;
     isLoggedIn = new ReplaySubject<boolean>();
     isLoggedIn$ = this.isLoggedIn.asObservable();
 
-    constructor(private http: Http) {
+    constructor(private http: Http, private authHttp: AuthHttp, private jwtHelper: JwtHelper) {
         this.loggedIn();
     }
 
@@ -33,6 +35,7 @@ export class AuthService {
                     localStorage.setItem('username', username);
                     localStorage.setItem('id_token', token);
                     this.loggedIn();
+                    this.scheduleRefresh();
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -56,6 +59,7 @@ export class AuthService {
                     localStorage.setItem('username', username);
                     localStorage.setItem('id_token', token);
                     this.loggedIn();
+                    this.scheduleRefresh();
                     return response.status;
                 } else {
                     console.log(response.json().error);
@@ -74,7 +78,68 @@ export class AuthService {
         if (localStorage.getItem('username')) {
             localStorage.removeItem('username');
         }
+        this.unscheduleRefresh();
         this.loggedIn();
+    }
+
+    refresh() {
+        let token = localStorage.getItem('id_token');
+        let headers: Headers = new Headers;
+        headers.set('Authorization', 'Bearer ' + token);
+        let options: RequestOptions = new RequestOptions({ headers: headers });
+
+        return this.http.get('http://localhost:8000/api/auth/refresh-token', options).toPromise()
+            .then(response => {
+                let token = response.headers.get('Authorization').replace('Bearer ', '');
+                if (token) {
+                    localStorage.setItem('id_token', token);
+                    this.loggedIn();
+                }
+            })
+    }
+
+    // Returns an observable with an interval equal to the delay and subscribing it so that it calls refresh after the delay time
+    scheduleRefresh() {
+        let source = this.authHttp.tokenStream
+            .flatMap(token => {
+                let jwtIat = this.jwtHelper.decodeToken(token).iat;
+                let jwtExp = this.jwtHelper.decodeToken(token).exp;
+                let iat = new Date(0);
+                let exp = new Date(0);
+                let delay = (exp.setUTCSeconds(jwtExp) - iat.setUTCSeconds(jwtIat));
+
+                return Observable.interval(delay);
+            })
+
+        this.refreshSubscription = source.subscribe(() => {
+            this.refresh();
+        })
+    }
+
+    // Return an observable with a timer equal to the time until token expiry and subscribing it to call refresh and schedule further refreshing
+    startupTokenRefresh() {
+        let source = this.authHttp.tokenStream
+            .flatMap(token => {
+                let now = new Date().valueOf();
+                let jwtExp = this.jwtHelper.decodeToken(token).exp;
+                let exp = new Date(0);
+                exp.setUTCSeconds(jwtExp);
+                let delay = exp.valueOf() - now;
+
+                return Observable.timer(delay);
+            })
+
+        source.subscribe(() => {
+            this.refresh();
+            this.scheduleRefresh();
+        })
+    }
+
+    // Unsubscribe from any refreshing after logout
+    unscheduleRefresh() {
+        if (this.refreshSubscription) {
+            this.refreshSubscription.unsubscribe();
+        }
     }
 
 }
