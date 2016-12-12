@@ -4,6 +4,7 @@ import { Observable, Subscription } from 'rxjs';
 import { PlayerService } from '../services/player.service';
 import { CustomTeamService } from '../services/custom-team.service';
 import { AuthService } from '../services/auth.service';
+import { AlertService } from '../services/alert.service';
 
 import { Player } from '../models/player';
 import { CustomTeam } from '../models/custom-team';
@@ -28,7 +29,8 @@ export class PlayersComponent implements OnInit {
     constructor(
         private playerService: PlayerService,
         private customTeamService: CustomTeamService,
-        private authService: AuthService
+        private authService: AuthService,
+        private alertService: AlertService,
     ) { }
 
     ngOnInit() {
@@ -64,7 +66,17 @@ export class PlayersComponent implements OnInit {
     addPlayer(team: CustomTeam, player: Player) {
         this.customTeamService.addPlayer(team, player)
             .subscribe(
-                result => {}
+                result => {
+                    if (result === 'OK')
+                        this.alertService.addAlert('success', player.name + ' was added to ' + team.name + '.');
+                },
+                error => {
+                    if (error._body === 'duplicate_player') {
+                        this.alertService.addAlert('danger', player.name + ' is already on ' + team.name + '.');
+                    } else {
+                        this.alertService.addAlert('danger', 'An error had occurred.');
+                    }
+                }
             )
     }
 
