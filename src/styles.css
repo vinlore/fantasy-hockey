@@ -64,3 +64,28 @@ body {
 .form-error .form-control {
     box-shadow: inset 0 -2px 0 #f44336 !important;
 }
+
+.global-alert .alert {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    border-radius: 0;
+    z-index: 100;
+    border: 0;
+    font-size: 1rem;
+}
+
+.global-alert .alert-success {
+    background-color: rgba(76, 175, 80, 0.8);
+    color: white;
+}
+
+.global-alert .alert-danger {
+    background-color: rgba(229, 57, 53, 0.8);
+    color: white;
+}
+
+.table {
+    font-size: 0.9rem;
+}

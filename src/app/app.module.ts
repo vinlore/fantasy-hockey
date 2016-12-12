@@ -11,6 +11,7 @@ import { AuthHttp, AuthConfig, AUTH_PROVIDERS, provideAuth, JwtHelper } from 'an
 
 // Services
 import { AuthService } from './services/auth.service';
+import { AlertService } from './services/alert.service';
 
 // Guards
 import { AuthGuard } from './guards/auth.guard';
@@ -50,6 +51,7 @@ import { CustomTeamComponent } from './custom-team/custom-team.component';
         NgbModule.forRoot(),
     ],
     providers: [
+        AlertService,
         AuthService,
         AuthGuard,
         AuthHttp,

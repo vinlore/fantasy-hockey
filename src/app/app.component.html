@@ -1,4 +1,5 @@
 <div class="root-container">
+    <ngb-alert class="global-alert" [type]="alert.type" [dismissible]="false" *ngIf="alert">{{alert.message}}</ngb-alert>
     <nav-menu></nav-menu>
     <div class="inner-container">
         <router-outlet></router-outlet>
