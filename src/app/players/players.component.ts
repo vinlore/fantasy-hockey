@@ -13,18 +13,19 @@ import { CustomTeam } from '../models/custom-team';
     selector: 'players',
     templateUrl: './players.component.html',
     styleUrls: ['./players.component.css'],
-    providers: [PlayerService, CustomTeamService],
+    providers: [PlayerService],
 })
 export class PlayersComponent implements OnInit {
 
     loggedIn: boolean;
-    subscription: Subscription;
+    loggedInSub: Subscription;
+    customTeams: CustomTeam[];
+    customTeamsSub: Subscription;
     playersSize: number = 0;
     pageSize: number = 30;
     page: number = 1;
     players: Player[] = [];
     errorMsg: string;
-    teams: CustomTeam[];
 
     constructor(
         private playerService: PlayerService,
@@ -35,16 +36,19 @@ export class PlayersComponent implements OnInit {
 
     ngOnInit() {
         this.getPlayers();
-        this.subscription = this.authService.isLoggedIn$
+        this.loggedInSub = this.authService.isLoggedIn$
             .subscribe(loggedIn => {
                 this.loggedIn = loggedIn;
-                if (loggedIn) {
-                    this.getTeams();
-                }
             });
-        if (this.loggedIn) {
-            this.getTeams();
-        }
+        this.customTeamsSub = this.customTeamService.customTeams$
+            .subscribe(customTeams => {
+                this.customTeams = customTeams;
+            })
+    }
+
+    ngOnDestroy() {
+        this.loggedInSub.unsubscribe();
+        this.customTeamsSub.unsubscribe();
     }
 
     getPlayers() {
@@ -53,14 +57,6 @@ export class PlayersComponent implements OnInit {
             players => { this.players = players; this.playersSize = this.players.length },
             error => this.errorMsg = error
             );
-    }
-
-    getTeams() {
-        this.customTeamService.getTeams()
-            .subscribe(
-            teams => this.teams = teams,
-            error => this.errorMsg = error
-            )
     }
 
     addPlayer(team: CustomTeam, player: Player) {

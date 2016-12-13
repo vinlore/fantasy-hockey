@@ -12,16 +12,16 @@ import { CustomTeam } from '../models/custom-team';
     selector: 'nav-menu',
     templateUrl: './menu.component.html',
     styleUrls: ['./menu.component.css'],
-    providers: [CustomTeamService]
 })
 export class MenuComponent implements OnInit {
 
     loggedIn: boolean;
-    subscription: Subscription;
+    loggedInSub: Subscription;
     username: string;
     errorMsg: string;
     teamName: string;
-    teams: CustomTeam[];
+    customTeams: CustomTeam[];
+    customTeamsSub: Subscription;
 
     constructor(
         private authService: AuthService,
@@ -30,14 +30,14 @@ export class MenuComponent implements OnInit {
     ) { }
 
     ngOnInit() {
-        this.authService.startupTokenRefresh();
-        this.subscription = this.authService.isLoggedIn$
+        this.loggedInSub = this.authService.isLoggedIn$
             .subscribe(loggedIn => {
                 this.loggedIn = loggedIn;
-                if (loggedIn) {
-                    this.getTeams();
-                }
             });
+        this.customTeamsSub = this.customTeamService.customTeams$
+            .subscribe(customTeams => {
+                this.customTeams = customTeams;
+            })
     }
 
     logout(): void {
@@ -45,7 +45,8 @@ export class MenuComponent implements OnInit {
     }
 
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        this.loggedInSub.unsubscribe();
+        this.customTeamsSub.unsubscribe();
     }
 
     createTeam(f: NgForm) {
@@ -53,19 +54,8 @@ export class MenuComponent implements OnInit {
             this.customTeamService.createTeam(this.teamName)
                 .subscribe(
                 team => {
-                    this.teams.push(team);
                     this.router.navigate(['/custom-teams', team.id])
                 },
-                error => this.errorMsg = error
-                )
-        }
-    }
-
-    getTeams() {
-        if (this.loggedIn) {
-            this.customTeamService.getTeams()
-                .subscribe(
-                teams => this.teams = teams,
                 error => this.errorMsg = error
                 )
         }

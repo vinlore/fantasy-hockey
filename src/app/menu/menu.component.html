@@ -11,9 +11,9 @@
         <li><a routerLink="/players" routerLinkActive="active">Players</a></li>
         <li class="nav-header" *ngIf="loggedIn">Your Teams</li>
         <div *ngIf="loggedIn">
-            <li *ngFor="let team of teams"><a routerLink="/custom-teams/{{team.id}}" routerLinkActive="active">{{team.name}}</a></li>
+            <li *ngFor="let team of customTeams"><a routerLink="/custom-teams/{{team.id}}" routerLinkActive="active">{{team.name}}</a></li>
         </div>
-        <li id="no-teams" *ngIf="!teams && loggedIn">No teams :(</li>
+        <li id="no-teams" *ngIf="!customTeams && loggedIn">No teams :(</li>
     </ul>
     <div id="create-team" *ngIf="loggedIn">
         <div class="nav-header">New Team</div>

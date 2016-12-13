@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Response } from '@angular/http';
 import { Router } from '@angular/router';
 import { AuthHttp } from 'angular2-jwt';
-import { Observable } from 'rxjs';
+import { Observable, Subscription, ReplaySubject } from 'rxjs';
 
 import { AuthService } from '../services/auth.service';
 
@@ -11,6 +11,9 @@ import { Player } from '../models/player';
 
 @Injectable()
 export class CustomTeamService {
+
+    customTeams = new ReplaySubject<CustomTeam[]>();
+    customTeams$ = this.customTeams.asObservable();
 
     constructor(
         private router: Router,
@@ -30,8 +33,8 @@ export class CustomTeamService {
 
     getTeams() {
         return this.http.get('http://localhost:8000/api/custom-teams')
-            .map(response => {
-                return response.json() as CustomTeam[];
+            .toPromise().then(response => {
+                this.customTeams.next(response.json() as CustomTeam[]);
             }).catch(error => {
                 console.log(error);
                 return Observable.throw(error);
