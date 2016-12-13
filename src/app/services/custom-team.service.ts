@@ -41,6 +41,11 @@ export class CustomTeamService {
             })
     }
 
+    // reset customTeams array when logging out
+    clearTeams() {
+        this.customTeams.next(null);
+    }
+
     getTeam(id) {
         return this.http.get('http://localhost:8000/api/custom-teams/' + id)
             .map(response => {

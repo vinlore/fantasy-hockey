@@ -34,6 +34,7 @@ export class AppComponent implements OnInit {
         this.loggedInSub = this.authService.isLoggedIn$
             .subscribe(loggedIn => {
                 if (loggedIn) this.customTeamService.getTeams();
+                else this.customTeamService.clearTeams();
             });
     }
 
