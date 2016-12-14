@@ -21,6 +21,7 @@ export class PlayersComponent implements OnInit {
     loggedInSub: Subscription;
     customTeams: CustomTeam[];
     customTeamsSub: Subscription;
+    customAvailTeams: CustomTeam[];
     playersSize: number = 0;
     pageSize: number = 30;
     page: number = 1;
@@ -72,6 +73,17 @@ export class PlayersComponent implements OnInit {
                     } else {
                         this.alertService.addAlert('danger', 'An error had occurred.');
                     }
+                }
+            )
+    }
+
+    getAvailTeams(playerId) {
+        this.customAvailTeams = [];
+        this.customTeamService.getAvailTeams(playerId)
+            .subscribe(
+                teams => this.customAvailTeams = teams,
+                error => {
+
                 }
             )
     }

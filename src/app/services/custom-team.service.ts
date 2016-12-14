@@ -34,7 +34,21 @@ export class CustomTeamService {
     getTeams() {
         return this.http.get('http://localhost:8000/api/custom-teams')
             .toPromise().then(response => {
-                this.customTeams.next(response.json() as CustomTeam[]);
+                let customTeams: CustomTeam[] = [];
+                for (let team of response.json()) {
+                    customTeams.push(new CustomTeam(team));
+                }
+                this.customTeams.next(customTeams);
+            }).catch(error => {
+                console.log(error);
+                return Observable.throw(error);
+            })
+    }
+
+    getAvailTeams(playerId) {
+        return this.http.get('http://localhost:8000/api/avail-custom-teams/' + playerId)
+            .map(response => {
+                return response.json() as CustomTeam[];
             }).catch(error => {
                 console.log(error);
                 return Observable.throw(error);

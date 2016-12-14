@@ -28,10 +28,10 @@
                 <tr *ngFor="let player of (players | paginate:page:pageSize)">
                     <td>{{player.firstName}} {{player.lastName}}</td>
                     <td ngbDropdown>
-                        <a ngbDropdownToggle><i class="fa fa-plus"></i></a>
+                        <a ngbDropdownToggle (click)="getAvailTeams(player.id)"><i class="fa fa-plus"></i></a>
                         <div class="dropdown-menu">
                             <h6 class="dropdown-header">Add player to...</h6>
-                            <button class="dropdown-item" *ngFor="let team of customTeams" (click)="addPlayer(team, player)">{{team.name}}</button>
+                            <button class="dropdown-item" *ngFor="let team of customAvailTeams" (click)="addPlayer(team, player)">{{team.name}}</button>
                         </div>
                     </td>
                     <td>{{player.position}}</td>
